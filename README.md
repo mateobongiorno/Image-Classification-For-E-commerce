@@ -50,24 +50,37 @@
   
   <p>The project is organized into several modules:</p>
   
-  <ul>
-    <li><strong>api</strong>: Contains the code for the web API, including the Flask app, API endpoints, middleware, and utility functions. The <code>templates</code> folder holds the HTML templates for the web interface.</li>
-    <li><strong>model</strong>: Includes the code for the image classification service, which processes the uploaded images using the ML model. The <code>tests</code> folder contains the tests for the model module.</li>
-    <li><strong>stress_test</strong>: Contains the Locust file for stress testing the system.</li>
-    <li><strong>tests</strong>: Includes integration tests and other test utilities.</li>
-    <li><strong>docker-compose.yml</strong>: The Docker Compose configuration file that defines the services and their dependencies.</li>
-    <li><strong>README.html</strong>: The HTML file that provides an overview and instructions for the Image-Classification-For-E-commerce project.</li>
-  </ul>
+Let's take a quick overview on each module:
+
+- api: It has all the needed code to implement the communication interface between the users and our service. It uses Flask and Redis to queue tasks to be processed by our machine learning model.
+    - `api/app.py`: Setup and launch our Flask API.
+    - `api/views.py`: Contains the API endpoints. You must implement the following endpoints:
+        - *upload_image*: Displays a frontend in which the user can upload an image and get a prediction from our model.
+        - *predict*: POST method which receives an image and sends back the model prediction. This endpoint is useful for integrating other services and platforms because we can access it from any other programming language.
+        - *feedback*: Endpoint used to get feedback from users when the prediction from our model is incorrect.
+    - `api/utils.py`: Implements some extra functions used internally by our API.
+    - `api/settings.py`: It has all the API settings.
+    - `api/templates`: Here we put the .html files used in the front.
+    - `api/tests`: Test suite.
+- model: Implements the logic to get jobs from Redis and process them with our Machine Learning model. When we get the predicted value from our model, we must encode it on Redis again so it can be delivered to the user.
+    - `model/ml_service.py`: Runs a thread in which it gets jobs from Redis, processes them with the model, and returns the answers.
+    - `model/settings.py`: Settings for our ML model.
+    - `model/tests`: Test suite.
+- tests: This module contains integration tests so we can properly check our system's end-to-end behavior is expected.
+
+You can also take a look at the file `System_architecture_diagram.png` to have a graphical description of the microservices and how the communication is performed.
 
   <h2>Testing</h2>
-  <p>We have provided both integration and unit tests to ensure the correctness and functionality of the image classification system. Please follow the provided instructions to run the tests and verify the system's behavior.</p>
+  <p>We have provided both integration and unit tests to ensure the correctness and functionality of the image classification system. Please follow the instructions I've included to run the tests and verify the system's behavior.</p>
 
   <h2>Stress Testing with Locust</h2>
-  <p>For stress testing, we provide a Locust file that allows you to simulate multiple users accessing the system concurrently. Complete the file with the desired test scenarios and run the Locust test to evaluate the system's performance and scalability.</p>
+  <p>For stress testing, we provide a Locust file that allows you to simulate multiple users accessing the system concurrently. You can easily launch more instances for a particular service using `--scale SERVICE=NUM` when running `docker-compose up` command (https://docs.docker.com/compose/reference/up/). Scale `model` service to 2 or even more instances and check the performance with locust. </p> 
+  <pre> docker-compose up --scale model=5 </pre>
 
   <h2>User Feedback</h2>
-  <p>Implement the feedback functionality that allows users to provide feedback when the model prediction is incorrect. The feedback will be recorded and stored for future analysis and model improvement.</p>
+  <p> The users can report using the service UI when a model prediction is wrong. Store the reported image path and the model prediction in a `.csv` file inside the folder `/src/feedback` so we can access it later to check those cases in which our Machine Learning model failed according to users.</p>
 
-  <h2>Conclusion</h2>
-  <p>Congratulations on completing the Image Classification For E-commerce project! You have built a system that can classify the contents of uploaded images and ensure that inappropriate content is not displayed on the website. This solution can greatly improve the user experience and content moderation of the e-commerce platform.</p>
-  <p>Feel free to explore and enhance the project further by implementing additional features, improving the model's accuracy, or optimizing the system's performance. Happy coding!</p>
+  <h2></h2>
+  <p>By this, we have come to the end of this project.
+
+Thanks for trying to understand it, I hope you like it, Mateo.</p>
