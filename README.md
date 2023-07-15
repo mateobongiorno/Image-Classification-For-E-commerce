@@ -1,7 +1,7 @@
 <h1>Image Classification For E-commerce</h1>
 
   <h2>Project Overview</h2>
-  <p>Welcome to the Image Classification For E-commerce project! In this project, we will be building an image classification system for an online retail company. The goal of this system is to classify the contents of uploaded images to ensure that inappropriate or unacceptable images are not displayed on the website.</p>
+  <p>Welcome to the Image Classification For E-commerce project! In this project, we will be building an image classification system for an online retail company. The goal of this system is to classify the contents of uploaded images to ensure that inappropriate or unacceptable images are not displayed on the Website.</p>
 
   <h2>Problem Statement</h2>
   <p>The retail company allows customers to upload photos when submitting product reviews. However, they discovered that many of the uploaded photos were not suitable and should not be visible on the website. The challenge is to develop an image classification system that can automatically predict and classify the content of each uploaded photo.</p>
